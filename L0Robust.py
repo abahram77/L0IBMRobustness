@@ -41,8 +41,8 @@ classifier = TFClassifier(clip_values=(min_pixel_value, max_pixel_value), input_
                           labels_ph=labels_ph, train=train, loss=loss, learning=None, sess=sess)
 
 # Step 4: Train the ART classifier
-# classifier = AdversarialTrainer(classifier,art.attacks.ProjectedGradientDescent, ratio=1.0)
-classifier.fit(x_train, y_train, batch_size=64, nb_epochs=3)
+classifier = AdversarialTrainer(classifier,art.attacks.FastGradientMethod, ratio=1.0)
+classifier.fit(x_train, y_train, batch_size=256, nb_epochs=1)
 
 # Step 5: Evaluate the ART classifier on benign test examples
 
@@ -51,7 +51,7 @@ accuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test, axis=1)) /
 print('Accuracy on benign test examples: {}%'.format(accuracy * 100))
 
 # Step 6: Generate adversarial test examples
-attack = art.attacks.SaliencyMapMethod(classifier=classifier)
+attack = art.attacks.FastGradientMethod(classifier=classifier)
 x_test_adv = attack.generate(x=x_test)
 
 # Step 7: Evaluate the ART classifier on adversarial test examples
