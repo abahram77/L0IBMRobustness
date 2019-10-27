@@ -46,7 +46,7 @@ trainer = AdversarialTrainer(classifier,attack, ratio=1.0)
 trainer.fit(x_train, y_train, batch_size=128, nb_epochs=3)
 
 # Step 5: Evaluate the ART classifier on benign test examples
-
+##hello
 predictions = classifier.predict(x_test)
 accuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test, axis=1)) / len(y_test)
 print('Accuracy on benign test examples: {}%'.format(accuracy * 100))
